@@ -2,7 +2,6 @@ body {
   margin: 0;
   font-family: Arial;
   background: #f4f6fb;
-  color: #111;
 }
 
 .topbar {
@@ -67,4 +66,8 @@ body {
   padding: 10px;
   width: 200px;
   margin-top: 10px;
+}
+
+.hidden {
+  display: none;
 }
