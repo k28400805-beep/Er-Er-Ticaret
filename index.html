@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Er Er Ticaret</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="root"></div>
-<script type="module" src="/main.jsx"></script>
+
+  <div class="topbar">
+    Bursa Klima • Kombi • Isı Pompası Servisi
+  </div>
+
+  <header class="header">
+    <h1>Er Er Ticaret</h1>
+    <a href="tel:+905000000000" class="btn">Hemen Ara</a>
+  </header>
+
+  <section class="hero">
+    <h2>Bursa Teknik Servis</h2>
+    <p>Klima, kombi ve ısı pompası hizmetleri</p>
+  </section>
+
+  <section class="section">
+    <h2>Hizmetler</h2>
+
+    <div class="grid">
+      <div class="card">Klima Montaj</div>
+      <div class="card">Klima Bakım</div>
+      <div class="card">Kombi Servis</div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>İletişim</h2>
+    <a href="tel:+905000000000" class="btn">Ara</a>
+  </section>
+
+  <!-- AI -->
+  <div class="ai">
+    <button onclick="toggleAI()">AI Destek</button>
+
+    <div id="chat" class="chat hidden">
+      <p>Merhaba 👋</p>
+      <input placeholder="Sorunu yaz...">
+    </div>
+  </div>
+
+<script src="script.js"></script>
 </body>
 </html>
