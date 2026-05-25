@@ -1,55 +1,68 @@
-import { useState } from "react";
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f5f7fb;
+}
 
-export default function App() {
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+.container {
+  padding: 20px;
+}
 
-  return (
-    <div className="container">
+.header {
+  background: #0d6efd;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
 
-      <header className="header">
-        <h1>Er Er Ticaret</h1>
-        <p>Klima & Kombi Teknik Servisi</p>
-      </header>
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+}
 
-      <section className="hero">
-        <h2>Bursa Klima ve Kombi Servisi</h2>
-        <p>COPA, TCL, HYUNDAI, AIWA, ARISTON, NIBE markalarında profesyonel hizmet.</p>
-        <a href="tel:+905000000000" className="btn">Hemen Ara</a>
-      </section>
+.btn {
+  background: #0d6efd;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+}
 
-      <section className="services">
-        <h2>Hizmetler</h2>
+.services {
+  margin-top: 40px;
+}
 
-        <div className="grid">
-          <div className="card">Klima Montajı</div>
-          <div className="card">Klima Bakımı</div>
-          <div className="card">Kombi Servisi</div>
-          <div className="card">Gaz Dolumu</div>
-          <div className="card">Petek Temizliği</div>
-          <div className="card">Isı Pompası</div>
-        </div>
-      </section>
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
 
-      {/* AI BUTTON */}
-      <div className="ai-box">
-        <button onClick={() => setOpen(!open)} className="ai-btn">
-          AI Destek
-        </button>
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
 
-        {open && (
-          <div className="chat">
-            <p>Merhaba 👋 Nasıl yardımcı olabilirim?</p>
+.ai-box {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
 
-            <input
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Sorunu yaz..."
-            />
-          </div>
-        )}
-      </div>
+.ai-btn {
+  background: purple;
+  color: white;
+  padding: 12px;
+  border-radius: 50px;
+  border: none;
+}
 
-    </div>
-  );
+.chat {
+  background: white;
+  padding: 10px;
+  margin-top: 10px;
+  width: 200px;
+  border-radius: 10px;
 }
