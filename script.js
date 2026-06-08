@@ -1,16 +1,30 @@
-// AI Assistant Toggle
+// AI Assistant Toggle Function
 function toggleAI() {
   const chatWindow = document.getElementById('chat-window');
+  if (!chatWindow) {
+    console.error('Chat window element not found');
+    return;
+  }
   chatWindow.classList.toggle('hidden');
   
+  // Focus input when chat opens
   if (!chatWindow.classList.contains('hidden')) {
-    document.getElementById('user-input').focus();
+    setTimeout(() => {
+      const input = document.getElementById('user-input');
+      if (input) input.focus();
+    }, 100);
   }
 }
 
 // Send Message Function
 function sendMessage() {
   const userInput = document.getElementById('user-input');
+  
+  if (!userInput) {
+    console.error('User input element not found');
+    return;
+  }
+  
   const message = userInput.value.trim();
   
   if (!message) return;
@@ -21,16 +35,22 @@ function sendMessage() {
   // Clear input
   userInput.value = '';
   
-  // Generate bot response
+  // Generate bot response with delay
   setTimeout(() => {
     const botResponse = generateBotResponse(message);
     addMessageToChat(botResponse, 'bot');
-  }, 500);
+  }, 800);
 }
 
 // Add Message to Chat Display
 function addMessageToChat(text, sender) {
   const chatMessages = document.getElementById('chat-messages');
+  
+  if (!chatMessages) {
+    console.error('Chat messages container not found');
+    return;
+  }
+  
   const messageDiv = document.createElement('div');
   messageDiv.className = `message ${sender}-message`;
   
@@ -40,75 +60,101 @@ function addMessageToChat(text, sender) {
   messageDiv.appendChild(p);
   chatMessages.appendChild(messageDiv);
   
-  // Scroll to bottom
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  // Scroll to bottom with delay
+  setTimeout(() => {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 50);
 }
 
-// Generate Bot Response
+// Generate Bot Response with AI Logic
 function generateBotResponse(userMessage) {
   const message = userMessage.toLowerCase().trim();
   
-  // Service-related keywords
-  if (message.includes('klima') && message.includes('montaj')) {
-    return 'Klima montaj hizmetimiz profesyonel teknisyenlerimiz tarafından yapılır. Hemen arayarak teklif alabilirsiniz: 0224 544 86 16';
+  // Klima Montajı
+  if (message.includes('klima') && (message.includes('montaj') || message.includes('monte'))) {
+    return '✅ Klima montaj hizmetimiz profesyonel teknisyenlerimiz tarafından yapılır. Tüm markalara uyumlu ve garantili kurulum. Hemen arayarak teklif alabilirsiniz: 📞 0224 544 86 16';
   }
   
-  if (message.includes('klima') && (message.includes('bakım') || message.includes('temizlik'))) {
-    return 'Klima bakım ve temizlik hizmetimiz düzenli olarak yapılması önerilir. Fiyat bilgisi için lütfen bizi arayınız.';
+  // Klima Bakımı
+  if (message.includes('klima') && (message.includes('bakım') || message.includes('temizlik') || message.includes('petek'))) {
+    return '🧹 Klima bakım ve temizlik hizmetimiz düzenli olarak yapılması çok önerilir. Sezon başında ve mevsim sonu bakımı yapıyoruz. Detaylı fiyat için: 📞 0224 544 86 16';
   }
   
+  // Kombi
   if (message.includes('kombi')) {
-    return 'Kombi kurulum, bakım ve onarım hizmetleri sağlıyoruz. Acil servis için 7/24 ulaşabilirsiniz: 0224 544 86 16';
+    return '🔥 Kombi kurulum, bakım ve onarım hizmetleri sağlıyoruz. Tüm markaların ürünlerine hizmet veriyoruz. Acil servis için 7/24 ulaşabilirsiniz: 📞 0224 544 86 16';
   }
   
-  if (message.includes('gaz') || message.includes('donum')) {
-    return 'Gaz dolumu ve basınç kontrolü profesyonel ekibimizce yapılır. Güvenilir hizmet için bize ulaşın.';
+  // Gaz Dolumu
+  if (message.includes('gaz') || message.includes('dolum') || message.includes('basınç')) {
+    return '💨 Gaz dolumu ve basınç kontrolü profesyonel ekibimizce yapılır. Orijinal gaz kullanıyoruz. Güvenilir hizmet için: 📞 0224 544 86 16';
   }
   
-  if (message.includes('ısı pompası')) {
-    return 'Isı pompası kurulum, bakım ve tamiri konusunda uzmanız. NIBE ve COPA markalarında hizmet veriyoruz.';
+  // Isı Pompası
+  if (message.includes('ısı') || message.includes('pompa')) {
+    return '🌡️ Isı pompası kurulum, bakım ve tamiri konusunda uzmanız. NIBE ve COPA markalarında özel hizmet veriyoruz. Bilgi için: 📞 0224 544 86 16';
   }
   
-  if (message.includes('fiyat') || message.includes('ücret') || message.includes('maliyeti')) {
-    return 'Fiyatlandırma, hizmet türü ve ürün markasına göre değişir. Detaylı bilgi için lütfen arayınız: 0224 544 86 16';
+  // Fiyat Sorgusu
+  if (message.includes('fiyat') || message.includes('ücret') || message.includes('maliyet') || message.includes('ne kadar')) {
+    return '💰 Fiyatlandırma, hizmet türü ve ürün markasına göre değişir. Kesin fiyat için lütfen arayınız ve detaylı bilgi verelim: 📞 0224 544 86 16';
   }
   
-  if (message.includes('marka') || message.includes('hangı')) {
-    return 'COPA, TCL, HYUNDAI, AIWA, ARISTON, NIBE gibi ünlü markaların tüm ürünlerine hizmet veriyoruz.';
+  // Markalar
+  if (message.includes('marka') || message.includes('hangı ürün') || message.includes('ne markalara')) {
+    return '🏢 Çalıştığımız markalar: COPA, TCL, HYUNDAI, AIWA, ARISTON, NIBE. Tüm markaların ürünlerine profesyonel servis veriyoruz!';
   }
   
-  if (message.includes('acil') || message.includes('servis')) {
-    return 'Evet! Acil servis hizmetimiz 7/24 mevcuttur. Acil durumlar için 0224 544 86 16 numarasını arayınız.';
+  // Acil Servis
+  if (message.includes('acil') || message.includes('7/24') || message.includes('gece')) {
+    return '⚡ Evet! Acil servis hizmetimiz 7/24 mevcuttur. Acil durumlarda hemen müdahale ediyoruz. Acil çağrılar için: 📞 0224 544 86 16';
   }
   
-  if (message.includes('deneyim') || message.includes('tecrübe')) {
-    return '15+ yılın profesyonel deneyimiyle güvenilir hizmet sağlıyoruz. Sertifikalı teknisyenlerimiz sizin için çalışır.';
+  // Deneyim
+  if (message.includes('deneyim') || message.includes('tecrübe') || message.includes('kaç yıl')) {
+    return '✅ 15+ yılın profesyonel deneyimi vardır! Sertifikalı teknisyenlerimiz sizin için çalışır ve kaliteli hizmet sağlarız.';
   }
   
-  if (message.includes('adres') || message.includes('nerede')) {
-    return 'Bursa ve çevresinde profesyonel servis veriyoruz. Detaylı adres bilgisi için lütfen bizi arayınız: 0224 544 86 16';
+  // Adres/Konum
+  if (message.includes('adres') || message.includes('nerede') || message.includes('konum') || message.includes('bursa')) {
+    return '📍 Bursa ve çevresinde profesyonel servis veriyoruz. Ev ve işyerlerinize gidiyoruz. Detaylı bilgi: 📞 0224 544 86 16';
   }
   
-  if (message.includes('saatler') || message.includes('saat') && message.includes('açık')) {
-    return 'Pazartesi - Cumartesi: 08:00 - 18:00 saatleri arasında hizmet veriyoruz. Acil durumlar için 7/24 ulaşabilirsiniz.';
+  // Çalışma Saatleri
+  if (message.includes('saatler') || (message.includes('saat') && message.includes('açık'))) {
+    return '🕒 Normal Saatler: Pazartesi - Cumartesi 08:00 - 18:00 | Acil Servis: 24/7 | Pazar: Sadece acil işler';
   }
   
-  if (message.includes('memnun') || message.includes('garantı')) {
-    return 'Müşteri memnuniyeti garantimiz vardır. Tüm işlerimizi profesyonel standartlarda gerçekleştiririz.';
+  // Garanti/Memnuniyet
+  if (message.includes('garanti') || message.includes('memnun') || message.includes('güvence')) {
+    return '✅ Müşteri memnuniyeti garantimiz vardır! Tüm işlerimizi profesyonel standartlarda ve garantili olarak gerçekleştiririz.';
   }
   
-  if (message.includes('merhaba') || message.includes('selam')) {
-    return 'Merhaba! Er Er Ticaret'e hoş geldiniz. Klima, kombi veya ısı pompası hakkında sorularınız varsa yardımcı olmaktan mutluluk duyarız. 😊';
+  // Selamlaşma
+  if (message.includes('merhaba') || message.includes('selam') || message.includes('hey') || message.includes('hoş')) {
+    return 'Merhaba! 👋 Er Er Ticaret'e hoş geldiniz. Klima, kombi veya ısı pompası hakkında sorularınız varsa çok yardımcı olabilirim. Ne sorabilirim?';
   }
   
+  // Teşekkür
+  if (message.includes('teşekkür') || message.includes('sağol') || message.includes('çok iyi')) {
+    return '😊 Size hizmet vermekten mutluyuz! Başka sorunuz varsa sormaktan çekinmeyin. Hizmet almak için: 📞 0224 544 86 16';
+  }
+
   // Default response
-  return 'Sorunuz için teşekkürler! Daha spesifik bilgi için lütfen 0224 544 86 16 numarasını arayınız veya hizmetlerimiz bölümünü ziyaret ediniz.';
+  return 'Sorunuz için teşekkürler! 🙏 Daha spesifik bilgi için lütfen 📞 0224 544 86 16 numarasını arayınız veya yukarıdaki hizmetlerimiz bölümünü inceleyiniz.';
 }
 
-// Close chat when clicking outside
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-  // Prevent closing when clicking inside chat
+  console.log('Page loaded - AI Assistant ready');
+  
+  // Make sure chat window starts hidden
   const chatWindow = document.getElementById('chat-window');
+  if (chatWindow) {
+    chatWindow.classList.add('hidden');
+  }
+  
+  // Prevent closing when clicking inside chat
   if (chatWindow) {
     chatWindow.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -119,8 +165,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+    if (href === '#' || href === '') return;
+    
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
+    const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({
         behavior: 'smooth',
